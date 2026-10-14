@@ -1,0 +1,34 @@
+// gRPC-доступ к очереди задач ops — второй протокол рядом с REST (ops/api.py).
+// Те же операции плюс WatchJob: сервер сам присылает каждую смену статуса,
+// клиенту не нужно опрашивать GET /jobs/{id} по таймеру.
+// Ключ — в metadata "x-ops-key", как заголовок X-Ops-Key у REST.
+syntax = "proto3";
+
+package tmgoods.ops.v1;
+
+service Ops {
+  rpc EnqueueJob(EnqueueJobRequest) returns (Job);
+  rpc GetJob(GetJobRequest) returns (Job);
+  rpc WatchJob(GetJobRequest) returns (stream Job);
+}
+
+message EnqueueJobRequest {
+  string kind = 1;
+  string payload_json = 2;         // параметры задачи, JSON-объект
+  int32 priority = 3;
+  optional string idempotency_key = 4;
+}
+
+message GetJobRequest {
+  int64 id = 1;
+}
+
+message Job {
+  int64 id = 1;
+  string kind = 2;
+  string status = 3;               // queued | running | done | failed | dead | expired
+  int32 attempts = 4;
+  string result_json = 5;
+  string error = 6;
+  bool created = 7;                // только в ответе EnqueueJob: false — задача с этим ключом уже была
+}

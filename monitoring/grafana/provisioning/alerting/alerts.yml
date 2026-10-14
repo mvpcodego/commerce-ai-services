@@ -1,0 +1,114 @@
+# Правила оповещений. Контакт Telegram и маршрут к нему создаёт monitoring/setup-telegram.sh
+# через API: файловый провижининг Grafana превращает id чата из переменной в число и падает.
+apiVersion: 1
+
+groups:
+  - orgId: 1
+    name: tmgoods
+    folder: TMGoods
+    interval: 1m
+    rules:
+      - uid: site-down
+        title: Сайт не отвечает
+        condition: C
+        for: 3m
+        noDataState: Alerting
+        execErrState: Alerting
+        annotations:
+          summary: "{{ $labels.site }}: нет ответа 200 больше 3 минут"
+        data:
+          - refId: A
+            relativeTimeRange: { from: 300, to: 0 }
+            datasourceUid: prometheus
+            model: { refId: A, instant: true, expr: "min by (site) (ops_site_up)" }
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              refId: C
+              type: threshold
+              expression: A
+              conditions: [{ evaluator: { type: lt, params: [1] } }]
+
+      - uid: worker-down
+        title: Воркер фоновых задач молчит
+        condition: C
+        for: 3m
+        noDataState: Alerting
+        execErrState: Alerting
+        annotations:
+          summary: "ops-worker не отдаёт метрики или не проходил служебный цикл больше 5 минут"
+        data:
+          - refId: A
+            relativeTimeRange: { from: 300, to: 0 }
+            datasourceUid: prometheus
+            model: { refId: A, instant: true, expr: "time() - max(ops_worker_last_tick_timestamp)" }
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              refId: C
+              type: threshold
+              expression: A
+              conditions: [{ evaluator: { type: gt, params: [300] } }]
+
+      - uid: job-dead
+        title: Задача исчерпала попытки
+        condition: C
+        for: 0s
+        noDataState: OK
+        execErrState: Alerting
+        annotations:
+          summary: "{{ $labels.kind }}: задача ушла в dead, причина — в ops.jobs.last_error"
+        data:
+          - refId: A
+            relativeTimeRange: { from: 900, to: 0 }
+            datasourceUid: prometheus
+            model: { refId: A, instant: true, expr: "max by (kind) (ops_queue_dead_last_hour)" }
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              refId: C
+              type: threshold
+              expression: A
+              conditions: [{ evaluator: { type: gt, params: [0] } }]
+
+      - uid: queue-stuck
+        title: Очередь стоит
+        condition: C
+        for: 5m
+        noDataState: OK
+        execErrState: Alerting
+        annotations:
+          summary: "Готовая задача ждёт запуска больше 15 минут"
+        data:
+          - refId: A
+            relativeTimeRange: { from: 300, to: 0 }
+            datasourceUid: prometheus
+            model: { refId: A, instant: true, expr: "max(ops_queue_oldest_ready_seconds)" }
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              refId: C
+              type: threshold
+              expression: A
+              conditions: [{ evaluator: { type: gt, params: [900] } }]
+
+      - uid: memory-low
+        title: На сервере кончается память
+        condition: C
+        for: 10m
+        noDataState: OK
+        execErrState: Alerting
+        annotations:
+          summary: "Свободной памяти меньше 8% десять минут подряд"
+        data:
+          - refId: A
+            relativeTimeRange: { from: 600, to: 0 }
+            datasourceUid: prometheus
+            model: { refId: A, instant: true, expr: "node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes" }
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              refId: C
+              type: threshold
+              expression: A
+              conditions: [{ evaluator: { type: lt, params: [0.08] } }]
