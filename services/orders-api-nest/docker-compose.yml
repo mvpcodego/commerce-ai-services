@@ -1,0 +1,43 @@
+# Postgres (5436) и Kafka (9094) только для разработки и тестов этого сервиса.
+#   docker compose up -d postgres          # хватает для API и тестов
+#   docker compose up -d                   # плюс брокер для живой публикации событий
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: orders-nest-postgres
+    environment:
+      POSTGRES_USER: orders
+      POSTGRES_PASSWORD: orders
+      POSTGRES_DB: orders
+    ports:
+      - "127.0.0.1:5436:5432"
+    volumes:
+      - orders-nest-pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U orders -d orders"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+
+  kafka:
+    image: apache/kafka:3.9.1
+    container_name: orders-nest-kafka
+    ports:
+      - "127.0.0.1:9094:9094"
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: PLAINTEXT://:9094,CONTROLLER://:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9094
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@localhost:9093
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_NUM_PARTITIONS: 3
+      KAFKA_HEAP_OPTS: -Xms256m -Xmx256m
+    mem_limit: 600m
+
+volumes:
+  orders-nest-pg:

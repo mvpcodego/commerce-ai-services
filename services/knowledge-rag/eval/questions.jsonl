@@ -1,0 +1,36 @@
+{"question": "Сколько ждать посылку в Екатеринбург?", "relevant": ["faq-delivery"]}
+{"question": "Привезёте курьером по Москве бесплатно?", "relevant": ["faq-delivery"]}
+{"question": "Можно оплатить частями?", "relevant": ["faq-payment"]}
+{"question": "Работаете с юрлицами по безналу?", "relevant": ["faq-payment"]}
+{"question": "Сколько действует гарантия на головное устройство?", "relevant": ["faq-warranty"]}
+{"question": "Сохранится ли гарантия, если ставить в другом автосервисе?", "relevant": ["faq-warranty"]}
+{"question": "Магнитола не подошла, как сдать обратно и вернуть деньги?", "relevant": ["faq-returns"]}
+{"question": "Сколько стоит поставить магнитолу у вас и сколько это по времени?", "relevant": ["faq-install-service", "faq-self-install"]}
+{"question": "Смогу ли я сам поставить комплект без электрика?", "relevant": ["faq-self-install"]}
+{"question": "Как понять, какая рамка подойдёт к моей машине?", "relevant": ["faq-frame-choice"]}
+{"question": "Будут ли работать кнопки на руле после замены магнитолы?", "relevant": ["faq-steering-can"]}
+{"question": "Хочу оставить заводскую камеру парковки, это возможно?", "relevant": ["faq-camera"]}
+{"question": "Как перепрошить магнитолу с флешки?", "relevant": ["faq-firmware"]}
+{"question": "После установки звук стал тихим, в машине был штатный усилитель", "relevant": ["faq-sound-dsp"]}
+{"question": "Какой размер экрана выбрать для своей машины?", "relevant": ["faq-screen-size"]}
+{"question": "Магнитола отключается, когда завожу двигатель", "relevant": ["faq-not-turning-on"]}
+{"question": "Есть ли беспроводной CarPlay?", "relevant": ["faq-carplay", "bundle-set-004"]}
+{"question": "Что нужно для установки магнитолы в Hyundai Creta?", "relevant": ["car-hyundai-creta"]}
+{"question": "Сколько стоит комплект Vertek V8 для Toyota Camry?", "relevant": ["car-toyota-camry"]}
+{"question": "Какая проводка идёт для Lada Vesta?", "relevant": ["car-lada-vesta"]}
+{"question": "Есть ли CAN-шина в проводке для Haval Jolion?", "relevant": ["car-haval-jolion"]}
+{"question": "Рамка под какой экран для Skoda Octavia?", "relevant": ["car-skoda-octavia"]}
+{"question": "Какой комплект рекомендуете на Renault Duster?", "relevant": ["car-renault-duster"]}
+{"question": "Магнитола на Geely Monjaro", "relevant": ["car-geely-monjaro"]}
+{"question": "Подбор головного устройства для Mitsubishi Outlander", "relevant": ["car-mitsubishi-outlander"]}
+{"question": "Что входит в стартовый набор для Kia Sportage?", "relevant": ["car-kia-sportage"]}
+{"question": "Сколько оперативной памяти у Aurio S5 10 дюймов?", "relevant": ["hu-aurio-s5-10"]}
+{"question": "Есть ли DSP в Nordvox N2 9?", "relevant": ["hu-nordvox-n2-9"]}
+{"question": "Магнитола с вертикальным экраном 13 дюймов", "relevant": ["hu-nordvox-n6-max-13", "hu-vertek-v8-13"]}
+{"question": "Нужна магнитола 2DIN с экраном 7 дюймов", "relevant": ["hu-aurio-s1-7", "hu-nordvox-n4-7"]}
+{"question": "Какие магнитолы поддерживают камеры 360?", "relevant": ["hu-nordvox-n6-max-9", "hu-nordvox-n6-max-10", "hu-nordvox-n6-max-101", "hu-nordvox-n6-max-13", "hu-vertek-v8-9", "hu-vertek-v8-10", "hu-vertek-v8-101", "hu-vertek-v8-123", "hu-vertek-v8-13", "faq-camera", "bundle-set-002"]}
+{"question": "Vertek V3 10.1 в наличии?", "relevant": ["hu-vertek-v3-101"]}
+{"question": "Хочу обзор вокруг машины на 360 градусов, что купить?", "relevant": ["bundle-set-002", "faq-camera"]}
+{"question": "Как получить бас, не занимая багажник?", "relevant": ["bundle-set-006"]}
+{"question": "Шумоизоляция арок и пола", "relevant": ["bundle-set-010"]}
+{"question": "Сигнализация с автозапуском и иммобилайзером", "relevant": ["bundle-set-009"]}

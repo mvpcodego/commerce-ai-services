@@ -1,0 +1,20 @@
+# Локальная база для knowledge-rag. Порт только на 127.0.0.1; пароль — для разработки, не для прода.
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: knowledge-rag-db
+    environment:
+      POSTGRES_USER: rag
+      POSTGRES_PASSWORD: ${RAG_DB_PASSWORD:-rag}
+      POSTGRES_DB: rag
+    ports:
+      - "127.0.0.1:5435:5432"
+    volumes:
+      - rag-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rag -d rag"]
+      interval: 2s
+      retries: 30
+
+volumes:
+  rag-pgdata:
